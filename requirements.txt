@@ -1,0 +1,9 @@
+smplx
+scipy
+opencv-python
+moviepy
+librosa=0.8.0
+pytorch3d
+matplotlib
+easydict
+pyyaml==5.4.1

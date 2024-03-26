@@ -1,0 +1,325 @@
+structure:
+    name: SepVQVAEXM
+    up_half:
+    #ChoreoGrapher Configs
+        levels: 1
+        downs_t: [2,]
+        strides_t : [2,]
+        emb_width : 512
+        l_bins : 512
+        l_mu : 0.99
+        commit : 0.02
+        hvqvae_multipliers : [1,]
+        width: 512
+        depth: 3
+        m_conv : 1.0
+        dilation_growth_rate : 3
+        sample_length: 240
+        use_bottleneck: True
+        joint_channel: 3
+        rot_joint_channel: 9
+        pos_channel: 48
+        rot_channel: 144
+        # depth: 3
+        # width: 128
+        # m_conv: 1.0
+        # dilation_growth_rate: 1
+        # dilation_cycle: None
+        vel: 1
+        acc: 1
+        vqvae_reverse_decoder_dilation: True
+    down_half:
+        levels: 1
+        downs_t: [2,]
+        strides_t : [2,]
+        emb_width : 512
+        l_bins : 512
+        l_mu : 0.99
+        commit : 0.02
+        hvqvae_multipliers : [1,]
+        width: 512
+        depth: 3
+        m_conv : 1.0
+        dilation_growth_rate : 3
+        sample_length: 240
+        use_bottleneck: True
+        joint_channel: 3
+        rot_joint_channel: 9
+        pos_channel: 27
+        rot_channel: 81
+        # depth: 3
+        # width: 128
+        # m_conv: 1.0
+        # dilation_growth_rate: 1
+        # dilation_cycle: None
+        vel: 1
+        acc: 1
+        vqvae_reverse_decoder_dilation: True
+    lhand:
+        levels: 1
+        downs_t: [2,]
+        strides_t : [2,]
+        emb_width : 512
+        l_bins : 512
+        l_mu : 0.99
+        commit : 0.02
+        hvqvae_multipliers : [1,]
+        width: 512
+        depth: 3
+        m_conv : 1.0
+        dilation_growth_rate : 3
+        sample_length: 240
+        use_bottleneck: True
+        joint_channel: 3
+        rot_joint_channel: 9
+        pos_channel: 45
+        rot_channel: 135
+        # depth: 3
+        # width: 128
+        # m_conv: 1.0
+        # dilation_growth_rate: 1
+        # dilation_cycle: None
+        vel: 1
+        acc: 1
+        vqvae_reverse_decoder_dilation: True
+    rhand:
+        levels: 1
+        downs_t: [2,]
+        strides_t : [2,]
+        emb_width : 512
+        l_bins : 512
+        l_mu : 0.99
+        commit : 0.02
+        hvqvae_multipliers : [1,]
+        width: 512
+        depth: 3
+        m_conv : 1.0
+        dilation_growth_rate : 3
+        sample_length: 240
+        use_bottleneck: True
+        joint_channel: 3
+        rot_joint_channel: 9
+        pos_channel: 45
+        rot_channel: 135
+        # depth: 3
+        # width: 128
+        # m_conv: 1.0
+        # dilation_growth_rate: 1
+        # dilation_cycle: None
+        vel: 1
+        acc: 1
+        vqvae_reverse_decoder_dilation: True
+    use_bottleneck: True
+    joint_channel: 3
+    rot_joint_channel: 9
+    l_bins : 512
+    
+structure_transl_vqvae:
+    name: VQVAE
+    #ChoreoGrapher Configs
+    levels: 1
+    downs_t: [2,]
+    strides_t : [2,]
+    emb_width : 512
+    l_bins : 512
+    l_mu : 0.99
+    commit : 0.02
+    hvqvae_multipliers : [1,]
+    width: 512
+    depth: 3
+    m_conv : 1.0
+    dilation_growth_rate : 3
+    sample_length: 240
+    use_bottleneck: True
+    joint_channel: 3
+    # depth: 3
+    # width: 128
+    # m_conv: 1.0
+    # dilation_growth_rate: 1
+    # dilation_cycle: None
+    input_dim: 3
+    vel: 1
+    acc: 1
+    vqvae_reverse_decoder_dilation: True
+    use_bottleneck: True
+    joint_channel: 3
+    l_bins : 512
+
+
+structure_generate:
+    name: GPT2ntLN
+    #ChoreoGrapher Configs
+    block_size: 30
+    look_forward: 29
+    vocab_size_up: 512
+    vocab_size_down: 512
+    vocab_size_lhand: 512
+    vocab_size_rhand: 512
+    vocab_size_transl: 512
+    n_embd: 768
+    base:
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        vocab_size_up: 512
+        vocab_size_down: 512
+        block_size: 30
+        look_forward: 29
+        n_layer: 6
+        n_head: 12
+        n_embd: 768 
+        n_music: 768
+        n_music_emb: 768
+    head:
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        vocab_size: 512
+        block_size: 30
+        look_forward: 29
+        n_layer: 6
+        n_head: 12
+        n_embd: 768
+        vocab_size_up: 512
+        vocab_size_down: 512
+        vocab_size_transl: 512
+    music_trans:
+        n_music: 54
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        n_layer: 3
+        n_embd: 768
+        downsample_rate: 4
+        block_size: 30
+        look_forward: 29
+        n_head: 12
+        n_music_emb: 768 
+        look_forward: 29
+    leader_up_trans:
+        n_music: 768
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        n_layer: 3
+        n_embd: 768
+        downsample_rate: 1
+        block_size: 30
+        look_forward: 29
+        n_head: 12
+        n_music_emb: 768 
+        look_forward: 29
+    leader_down_trans:
+        n_music: 768
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        n_layer: 3
+        n_embd: 768
+        downsample_rate: 1
+        block_size: 30
+        look_forward: 29
+        n_head: 12
+        n_music_emb: 768 
+        look_forward: 29
+    leader_lhand_trans:
+        n_music: 768
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        n_layer: 3
+        n_embd: 768
+        downsample_rate: 1
+        block_size: 30
+        look_forward: 29
+        n_head: 12
+        n_music_emb: 768 
+        look_forward: 29
+    leader_rhand_trans:
+        n_music: 768
+        embd_pdrop: 0.1
+        resid_pdrop: 0.1
+        attn_pdrop: 0.1
+        n_layer: 3
+        n_embd: 768
+        downsample_rate: 1
+        block_size: 30
+        look_forward: 29
+        n_head: 12
+        n_music_emb: 768 
+        look_forward: 29
+    n_music: 54
+    n_music_emb: 768
+
+
+
+loss_weight:
+    mse_weight: 1
+optimizer:
+    type: Adam
+    kwargs:
+        lr: 0.0003
+        betas: [0.9, 0.999]
+        weight_decay: 0
+    schedular_kwargs:
+        milestones: [100, 200]
+        gamma: 0.1
+# schedular: []
+data:
+    train:
+        music_root: ./data/music
+        data_root: ./data/motion
+        move: 4
+        dtype: both
+        split: train
+        interval: 240
+        batch_size: 128
+        music_dance_rate: 1
+    test:
+        music_root: ./data/music
+        data_root: ./data/motion
+        move: 4
+        dtype: both
+        split: test
+        interval: None
+        music_dance_rate: 1
+    # demo:
+    #     music_root: /mnt/lustre/syli/duet/demo_data/music
+    #     data_root: /mnt/lustre/syli/duet/demo_data/motion
+    #     move: 4
+    #     dtype: both
+    #     split: demo
+    #     interval: None
+    #     music_dance_rate: 1
+
+music_motion_rate: 4
+music_len: 236
+motion_len: 30
+look_forward_size: 29
+
+testing:
+    height: 540
+    width: 960
+    ckpt_epoch: 500
+    music_source: ./data/music/mp3/test/
+
+vqvae_weight: './experiments/motion_vqvae/ckpt/epoch_500.pt'
+transl_vqvae_weight: './experiments/transl_vqvae/ckpt/epoch_500.pt'
+
+expname: follower_gpt
+
+epoch: 250
+batch_size: 256
+save_per_epochs: 10
+test_freq: 500
+log_per_updates: 1
+seed: 42
+rotmat: False
+cuda: True
+global_vel: False
+ds_rate: 4
+move_train: 4
+
+# demo: False
+# sample_code_length: 150
+# analysis_array: [438, 511, 419, 11, 7, 92, 128, 256, 333]
