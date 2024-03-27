@@ -7,44 +7,14 @@ import sys
 import json
 import random
 import argparse
-# import essentia
-# import essentia.streaming
-# from essentia.standard import *
-# import librosa
+
 import numpy as np
-# from extractor import FeatureExtractor
-# from aistplusplus_api.aist_plusplus.loader import AISTDataset
+
 from smplx import SMPLX
 import torch
 import torch
 from scipy.spatial.transform import Rotation as R
 
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--input_video_dir', type=str, default='aist_plusplus_final/all_musics')
-# parser.add_argument('--input_annotation_dir', type=str, default='aist_plusplus_final')
-# parser.add_argument('--smpl_dir', type=str, default='smpl')
-
-# parser.add_argument('--train_dir', type=str, default='data/aistpp_train_wav')
-# parser.add_argument('--test_dir', type=str, default='data/aistpp_test_full_wav')
-
-# parser.add_argument('--split_train_file', type=str, default='aist_plusplus_final/splits/crossmodal_train.txt')
-# parser.add_argument('--split_test_file', type=str, default='aist_plusplus_final/splits/crossmodal_test.txt')
-# parser.add_argument('--split_val_file', type=str, default='aist_plusplus_final/splits/crossmodal_val.txt')
-
-# parser.add_argument('--sampling_rate', type=int, default=15360*2)
-# args = parser.parse_args()
-
-# extractor = FeatureExtractor()
-
-# if not os.path.exists(args.train_dir):
-#     os.mkdir(args.train_dir)
-# if not os.path.exists(args.test_dir):
-#     os.mkdir(args.test_dir)
-
-# split_train_file = args.split_train_file
-# split_test_file = args.split_test_file
-# split_val_file = args.split_val_file
 
 
 def smplx_to_pos3d(data):
@@ -87,10 +57,7 @@ def smplx_to_rotmat(data):
 
 
 if __name__ == '__main__':
-    # musics, dances, fnames = make_music_dance_set(args.input_video_dir, args.input_annotation_dir) 
 
-    # musics, dances, musics_raw = align(musics, dances)
-    # save(args, musics, dances, fnames, musics_raw)
     motion_root =  '/mnt/sfs-common/syli/duet_final/demo_data/motion'
     smpl_root =    '/mnt/sfs-common/syli/duet_final/demo_data/motion/smplx'
     pos3d_root =   '/mnt/sfs-common/syli/duet_final/demo_data/motion/pos3d'
@@ -101,10 +68,7 @@ if __name__ == '__main__':
 
     for folder in os.listdir(smpl_root):
         print(folder)
-        # if folder != 'train' and folder != 'test':
-        #     continue
-        # else:
-        #     print('Wula', flush=True)
+
         smplx_folder = os.path.join(smpl_root, folder)
         pos3d_folder = os.path.join(pos3d_root, folder)
         rotmat_folder = os.path.join(rotmat_root, folder)
@@ -120,7 +84,7 @@ if __name__ == '__main__':
                 continue
 
             data = np.load(os.path.join(smplx_folder, smplx_file), allow_pickle=True, encoding='bytes').item()
-            # print(data)
+
             keypoints3d = smplx_to_pos3d(data)
             rotmat = smplx_to_rotmat(data)
             
@@ -130,6 +94,5 @@ if __name__ == '__main__':
             np.save(os.path.join(rotmat_folder, smplx_file), rotmat)
 
 
-    # print(keypoints3d.shape)
 
 

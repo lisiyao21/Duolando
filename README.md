@@ -99,7 +99,7 @@ a. Solo metrics
 
 Run 
 
-    python utils/metrics_new.py
+    python utils/metrics.py
 
 To fasten the computation, comment Line 184 of utils/metrics_new.py after computed the ground-truth feature once. To test another folder, change Line 182 to your destination,
 
@@ -109,24 +109,29 @@ b. Interactive metrics
 
 c. Contact frequency
 
-This metric is computed based on [torch-mesh-isect](https://github.com/vchoutas/torch-mesh-isect). We first inflate the smplx models vertices toward their normals by 1cm and then compute the intersection between the meshes. To do so, please first build it
+This metric is computed based on [torch-mesh-isect](https://github.com/vchoutas/torch-mesh-isect) (but modified). We first inflate the smplx models vertices toward their normals by 1cm and then compute the intersection between the meshes. To do so, please first build it
 
-    cd utils/torch-mesh-isect
+    cd utils/contact/torch-mesh-isect
     python setup.py install
+    cd ../../..
 
 Then, run 
 
-    python examples/compute_contact_freq.py
+    python utils/compute_contact_freq.py --root experiments/rl/eval/npy/ep0050
 
 Before that, please change Line 80 and 81 to path/to/downloaded/smplx/models. This computation is slow.
 
 The values should be exactly the same as reported in the paper. 
 
+c. Slipping rate
+
+    python utils/metric_footskating_dur.py
+
 ## Accompaniment in the wild
 
-TBD
+A rough guidance to make an AR use in the wild. TBD
 
-I wish you could enjoy it. 
+Wish you enjoy it!
 
 ### Citation
 
