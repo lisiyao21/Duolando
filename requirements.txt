@@ -7,3 +7,5 @@ pytorch3d
 matplotlib
 easydict
 pyyaml==5.4.1
+pyrender
+trimesh
