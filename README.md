@@ -71,11 +71,11 @@ The training of Duolando comprises of 4 steps in the following sequence. If you 
 ### Step 2: Train translation VQ-VAE
     bash srun_transl.sh configs/transl_vqvaex_final.yaml train [node name] 1
 
-### Step 3: Train motion GPT
+### Step 3: Train follower GPT
 
     bash srun_gpt2t.sh configs/follower_gpt_beta0.9_final.yaml train [node name] 8
 
-### Step 4: Actor-Critic finetuning on target music 
+### Step 4: RL finetuning
 
     bash srun_rl_new_.sh configs/rl_final_debug_reward3_random_5mem_lr3e-5.yaml train [node name] 8
 
@@ -87,7 +87,7 @@ To test with our pretrained models, please download the weights from [here] (Goo
 
 To test follower GPT:
 
-    bash srun_gpt2t.sh configs/follower_gpt_beta0.9_final.yaml eval [your node name] 1
+    bash srun_gpt2t.sh configs/follower_gpt_beta0.9_final.yaml eval [node name] 1
    
 To test follower GPT w. RL:
     
@@ -101,7 +101,7 @@ Run
 
     python utils/metrics.py
 
-To fasten the computation, comment Line 184 of utils/metrics_new.py after computed the ground-truth feature once. To test another folder, change Line 182 to your destination,
+To fasten the computation, comment the code "calc_and_save_feats(gt_root)" of line 215 in utils/metrics.py after computed the ground-truth feature once. To test another folder, change Line 311 to your destination.
 
 b. Interactive metrics
 
