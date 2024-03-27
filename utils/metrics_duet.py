@@ -119,21 +119,7 @@ def duet_feature(posef, posel):
 
     return feat
 
-def cross_penetration(posef, posel):
-    """
-        posef: Tx55x3
-        posel: Tx55x3
-    """
-    # Tx10x3
-    Tf, _, _ = posef.shape
-    Tl, _, _ = posel.shape
-    T = np.min([Tf, Tl])
-    posef = posef.copy()[:T, :]
-    posel = posel.copy()[:T, :]
-    cross_pen = np.sqrt(np.sum((posef[:, :, None, :] - posel[:, None, :, :])**2, axis=-1)).reshape(T, -1)
-    cross_pen = np.mean((np.min(cross_pen, axis=-1) < 0.01).astype(float))
 
-    return cross_pen
 
 
 def quantized_metrics(predicted_pkl_root, gt_pkl_root):
@@ -142,13 +128,6 @@ def quantized_metrics(predicted_pkl_root, gt_pkl_root):
     pred_features = []
     gt_freatures = []
 
-
-
-    # for pkl in os.listdir(predicted_pkl_root):
-    #     pred_features_k.append(np.load(os.path.join(predicted_pkl_root, 'kinetic_features', pkl))) 
-    #     pred_features_m.append(np.load(os.path.join(predicted_pkl_root, 'manual_features_new', pkl)))
-    #     gt_freatures_k.append(np.load(os.path.join(predicted_pkl_root, 'kinetic_features', pkl)))
-    #     gt_freatures_m.append(np.load(os.path.join(predicted_pkl_root, 'manual_features_new', pkl)))
 
     pred_features = [np.load(os.path.join(predicted_pkl_root, 'duet_features', pkl)) for pkl in os.listdir(os.path.join(predicted_pkl_root, 'duet_features'))]
     gt_freatures = [np.load(os.path.join(gt_pkl_root, 'duet_features', pkl)) for pkl in os.listdir(os.path.join(gt_pkl_root, 'duet_features'))]
@@ -171,10 +150,6 @@ def quantized_metrics(predicted_pkl_root, gt_pkl_root):
 
 def calc_fid(kps_gen, kps_gt):
 
-    # print(kps_gen.shape)
-    # print(kps_gt.shape)
-
-    # kps_gen = kps_gen[:20, :]
 
     mu_gen = np.mean(kps_gen, axis=0)
     sigma_gen = np.cov(kps_gen, rowvar=False)
@@ -250,53 +225,12 @@ def calc_and_save_feats_duet(root):
         # print(joint3d.shape)
         joint3df = np.load(os.path.join(root, pkl)).reshape([-1, 55, 3])
         joint3dl = np.load(os.path.join(root, pkll)).reshape([-1, 55, 3])
-        # joint3d24 = np.zeros([joint3d.shape[0], 24, 3])
-        # joint3d24[:, :22] = joint3d[:, :22]
-        # joint3d24[:, 22] = (joint3d[:, 25] + joint3d[:, 28] + joint3d[:, 31] + joint3d[:, 34] + joint3d[:, 37])/5.0
-        # joint3d24[:, 23] = (joint3d[:, 40] + joint3d[:, 43] + joint3d[:, 46] + joint3d[:, 49] + joint3d[:, 52])/5.0
-        # joint3d = joint3d24.copy().reshape([-1, 72])
-        # # print(extract_manual_features(joint3d.reshape(-1, 24, 3)))
-        # roott = joint3d[:1, :3]  # the root Tx72 (Tx(24x3))
-        # # print(roott)
-        # joint3d = joint3d - np.tile(roott, (1, 24))  # Calculate relative offset with respect to root
-        # print('==============after fix root ============')
-        # print(extract_manual_features(joint3d.reshape(-1, 24, 3)))
-        # print('==============bla============')
-        # print(extract_manual_features(joint3d.reshape(-1, 24, 3)))
-        # np_dance[:, :3] = root
+
         np.save(os.path.join(root, 'duet_features', pkl), duet_feature(joint3df, joint3dl))
 
-        pen_rates.append(cross_penetration(joint3df, joint3dl))
-    print('CFP: ', np.mean(pen_rates))
-        # np.save(os.path.join(root, 'manual_features_new', pkl), extract_manual_features(joint3d.reshape(-1, 24, 3)))
 
 
 
-
-# def get_mb(music_root, key, length=None):
-#     path = os.path.join(music_root, key)
-#     with open(path) as f:
-#         #print(path)
-#         # sample_dict = json.loads(f.read())
-#         if length is not None:
-#             beats = np.load(path)[:, 53][:][:length]
-#         else:
-#             beats = np.load(path)[:, 53]
-
-
-#         beats = beats.astype(bool)
-#         beat_axis = np.arange(len(beats))
-#         beat_axis = beat_axis[beats]
-        
-#         # fig, ax = plt.subplots()
-#         # ax.set_xticks(beat_axis, minor=True)
-#         # # ax.set_xticks([0.3, 0.55, 0.7], minor=True)
-#         # ax.xaxis.grid(color='deeppink', linestyle='--', linewidth=1.5, which='minor')
-#         # ax.xaxis.grid(True, which='minor')
-
-
-#         # print(len(beats))
-#         return beat_axis
 
 
 def calc_db(keypoints, name=''):
@@ -349,30 +283,16 @@ def calc_duet_be_score(root):
 if __name__ == '__main__':
 
 
-    gt_root = '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/all'
-    music_root = '/mnt/sfs-common/syli/duet_final/data/music2/feature/test'
+    gt_root = 'data/motion/pos3d/all'
+    music_root = 'data/music/feature/test'
     pred_roots = [
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random_5mem_3e-5/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random_5mem_3e-5/eval/npy/pos3d/ep0040',
-        '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/test',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt1_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt2_final/eval/npy/pos3d/ep0120',
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_normal/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_normal/npy/pos3d/ep0010'
+        'experiments/rl/eval/npy/pos3d/ep0050',
     ]
-    # print(calc_duet_ba_score('/mnt/lustre/syli/duet/Duelando/experiments/fgptn_9t_full_bsz128_transl_beta0.9_tp_trytry/eval/npy/pos3d/ep0500'), flush=True)
-    # pred_root = '/mnt/lustre/syli/dance/Bailando/experiments/cc_gpt_music_trans/eval/pkl/ep000500'
-    # pred_roots = '/mnt/lustre/syli/dance/Bailando/experiments/cc_motion_gpt_again/vis/pkl'
-    # calc_and_save_feats_duet(gt_root)
+
+    # run this line for only once
+    calc_and_save_feats_duet(gt_root)
     for pred_root in pred_roots:
         print(pred_root, flush=True)
-        pen_rate = calc_and_save_feats_duet(pred_root)
-
-
-    # print('Calculating metrics')
-    # print(gt_root)
-    # print(pred_root)
+        calc_and_save_feats_duet(pred_root)
         print(calc_duet_be_score(pred_root))
         print(quantized_metrics(pred_root, gt_root), flush=True)

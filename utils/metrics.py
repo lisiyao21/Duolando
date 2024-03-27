@@ -110,12 +110,6 @@ def quantized_metrics(predicted_pkl_root, gt_pkl_root):
     gt_freatures_m = []
 
 
-    # for pkl in os.listdir(predicted_pkl_root):
-    #     pred_features_k.append(np.load(os.path.join(predicted_pkl_root, 'kinetic_features', pkl))) 
-    #     pred_features_m.append(np.load(os.path.join(predicted_pkl_root, 'manual_features_new', pkl)))
-    #     gt_freatures_k.append(np.load(os.path.join(predicted_pkl_root, 'kinetic_features', pkl)))
-    #     gt_freatures_m.append(np.load(os.path.join(predicted_pkl_root, 'manual_features_new', pkl)))
-
     pred_features_k = [np.load(os.path.join(predicted_pkl_root, 'kinetic_features', pkl)) for pkl in os.listdir(os.path.join(predicted_pkl_root, 'kinetic_features'))]
     pred_features_m = [np.load(os.path.join(predicted_pkl_root, 'manual_features_new', pkl)) for pkl in os.listdir(os.path.join(predicted_pkl_root, 'manual_features_new'))]
     
@@ -127,42 +121,10 @@ def quantized_metrics(predicted_pkl_root, gt_pkl_root):
     pred_features_m = np.stack(pred_features_m) # Nx32
     gt_freatures_k = np.stack(gt_freatures_k) # N' x 72 N' >> N
     gt_freatures_m = np.stack(gt_freatures_m) # 
-
-#   T x 24 x 3 --> 72
-# T x72 -->32 
-    # print(gt_freatures_k.mean(axis=0))
-    # print(pred_features_k.mean(axis=0))
-    # print(gt_freatures_m.mean(axis=0))
-    # print(pred_features_m.mean(axis=0))
-    # print(gt_freatures_k.std(axis=0))
-    # print(pred_features_k.std(axis=0))
-    # print(gt_freatures_m.std(axis=0))
-    # print(pred_features_m.std(axis=0))
-
-    # gt_freatures_k = normalize(gt_freatures_k)
-    # gt_freatures_m = normalize(gt_freatures_m) 
-    # pred_features_k = normalize(pred_features_k)
-    # pred_features_m = normalize(pred_features_m)     
     
     gt_freatures_k, pred_features_k = normalize(gt_freatures_k, pred_features_k)
     gt_freatures_m, pred_features_m = normalize(gt_freatures_m, pred_features_m) 
-    # # pred_features_k = normalize(pred_features_k)
-    # pred_features_m = normalize(pred_features_m) 
-    # pred_features_k = normalize(pred_features_k)
-    # pred_features_m = normalize(pred_features_m)
-    
-    # print(gt_freatures_k.mean(axis=0))
-    # print(pred_features_k.mean(axis=0))
-    # # print(gt_freatures_m.mean(axis=0))
-    # print(pred_features_m.mean(axis=0))
-    # # print(gt_freatures_k.std(axis=0))
-    # print(pred_features_k.std(axis=0))
-    # # print(gt_freatures_m.std(axis=0))
-    # print(pred_features_m.std(axis=0))
 
-    
-    # print(gt_freatures_k)
-    # print(gt_freatures_m)
 
     print('Calculating metrics')
 
@@ -180,11 +142,6 @@ def quantized_metrics(predicted_pkl_root, gt_pkl_root):
 
 
 def calc_fid(kps_gen, kps_gt):
-
-    # print(kps_gen.shape)
-    # print(kps_gt.shape)
-
-    # kps_gen = kps_gen[:20, :]
 
     mu_gen = np.mean(kps_gen, axis=0)
     sigma_gen = np.cov(kps_gen, rowvar=False)
@@ -263,11 +220,7 @@ def calc_and_save_feats(root):
         roott = joint3d[:1, :3]  # the root Tx72 (Tx(24x3))
         # print(roott)
         joint3d = joint3d - np.tile(roott, (1, 24))  # Calculate relative offset with respect to root
-        # print('==============after fix root ============')
-        # print(extract_manual_features(joint3d.reshape(-1, 24, 3)))
-        # print('==============bla============')
-        # print(extract_manual_features(joint3d.reshape(-1, 24, 3)))
-        # np_dance[:, :3] = root
+
         np.save(os.path.join(root, 'kinetic_features', pkl), extract_kinetic_features(joint3d.reshape(-1, 24, 3)))
         np.save(os.path.join(root, 'manual_features_new', pkl), extract_manual_features(joint3d.reshape(-1, 24, 3)))
 
@@ -284,19 +237,11 @@ def get_mb(music_root, key, length=None):
         else:
             beats = np.load(path)[:, 53]
 
-        # print(beats)
+
         beats = beats.astype(bool)
         beat_axis = np.arange(len(beats))
         beat_axis = beat_axis[beats]
-        
-        # fig, ax = plt.subplots()
-        # ax.set_xticks(beat_axis, minor=True)
-        # # ax.set_xticks([0.3, 0.55, 0.7], minor=True)
-        # ax.xaxis.grid(color='deeppink', linestyle='--', linewidth=1.5, which='minor')
-        # ax.xaxis.grid(True, which='minor')
 
-
-        # print(len(beats))
         return beat_axis
 
 
@@ -360,39 +305,14 @@ def calc_ba_score(root, music_root):
 if __name__ == '__main__':
 
 
-    gt_root = '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/all'
-    music_root = '/mnt/sfs-common/syli/duet_final/data/music2/feature/all'
+    gt_root = 'data/motion/pos3d/all'
+    music_root = 'data/music/feature/all'
     pred_roots = [
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random_5mem_3e-5/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random_5mem_3e-5/eval/npy/pos3d/ep0040',
-        # '/mnt/lustre/syli/duet/Bailando/experiments/fgptn_9t_half_bsz256_transl_bailando/eval/npy/pos3d/ep0330',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/ac_new_full_tp_again2/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_normal/npy/pos3d/ep0050',
-        
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_nm2/npy/pos3d/ep0060',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0060',
-        # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt2_final/eval/npy/pos3d/ep0160',
-        # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt1_final/eval/npy/pos3d/ep0120'
-        # '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/test',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt1_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt2_final/eval/npy/pos3d/ep0120',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0010',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random/eval/npy/pos3d/ep0090'
-        
-        # '/mnt/lustre/syli/duet/data/motion/pos3d/test4metric',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/fgpt_full/eval/npy/pos3d/ep0260',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/fgptn_wo_music_9t_full_bsz128_transl_bet0.9_goon/eval/npy/pos3d/ep0180',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/gpt_full/eval/npy/pos3d/ep0500',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/fgptn_9t_full_bsz64_transl_beta0.9_wo_LA/eval/npy/pos3d/ep0500'
-
+        'experiments/rl/eval/npy/pos3d/ep0050',
     ]
-    # pred_root = '/mnt/lustre/syli/dance/Bailando/experiments/cc_gpt_music_trans/eval/pkl/ep000500'
-    # pred_roots = '/mnt/lustre/syli/dance/Bailando/experiments/cc_motion_gpt_again/vis/pkl'
-    # calc_and_save_feats(gt_root)
+
+    # 
+    calc_and_save_feats(gt_root)
     for pred_root in pred_roots:
         print(pred_root, flush=True)
         print(calc_ba_score(pred_root, music_root), flush=True)

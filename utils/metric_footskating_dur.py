@@ -45,31 +45,10 @@ def detect_footskating_dur(
 
 if __name__ == '__main__':
 
-    # root = 'dd100/ep0050/'
-    pred_roots=[
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_nm2/npy/pos3d/ep0060',
-        # '/mnt/lustre/syli/duet/Bailando/experiments/fgptn_9t_half_bsz256_transl_bailando/eval/npy/pos3d/ep0330',
-        # '/mnt/lustre/syli/duet/Duelando/experiments/ac_new_full_tp_again2/eval/npy/pos3d/ep0050',
-        '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/test',
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random_5mem_3e-5/eval/npy/pos3d/ep0050',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0050',
-        '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0050',
-        
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval_normal/npy/pos3d/ep0250',
-        # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval_nm2/npy/pos3d/ep0060',
-        # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0060',
-        # # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt2_final/eval/npy/pos3d/ep0160',
-        # # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt1_final/eval/npy/pos3d/ep0120'
-        # # '/mnt/sfs-common/syli/duet_final/data/motion/pos3d/test',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt1_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/gpt2_final/eval/npy/pos3d/ep0120',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/follower_gpt_full_bsz128_transl_beta0.9_final/eval/npy/pos3d/ep0250',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final/eval/npy/pos3d/ep0010',
-        # '/mnt/sfs-common/syli/duet_final/Duelando/experiments/rl_final_debug_reward3_lr1e-5_random/eval/npy/pos3d/ep0090'
-            ]
+    pred_roots = [
+        'experiments/rl/eval/npy/pos3d/ep0050',
+    ]
     for root in pred_roots:
-    # root = 'dd100/ep0500/'
 
         pelvis_threshold = 0.03  # m/s
         leg_velocity_threshold = 0.01  # m/s
