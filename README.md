@@ -5,9 +5,9 @@ Code for ICLR 2024 paper "Duolando: Follower GPT with Off-Policy Reinforcement L
 
 ✨ Please do not hesitate to give a star! ✨
 
-<!-- <p float="left">
-	<img src="https://github.com/lisiyao21/Bailando/blob/main/gifs/dance_gif1.gif" width="150" /> <img src="https://github.com/lisiyao21/Bailando/blob/main/gifs/dance_gif2.gif" width="360" /> <img width="280" src="https://github.com/lisiyao21/Bailando/blob/main/gifs/dance_gif3.gif"/>
-	</p> -->
+<p float="center">
+	<img src="https://github.com/lisiyao21/Duolando/blob/main/figs/duolando_teaser.png" width="500" /> 
+	</p>
 
 > We introduce a novel task within the field of human motion generation, termed dance accompaniment, which necessitates the generation of responsive movements from a dance partner, the "follower", synchronized with the lead dancer’s movements and the underlying musical rhythm. Unlike existing solo or group dance generation tasks, a duet dance scenario entails a heightened degree of interaction between the two participants, requiring delicate coordination in both pose and position. To support this task, we first build a large-scale and diverse duet interactive dance dataset, **DD100**, by recording about 117 minutes of professional dancers’ performances. To address the challenges inherent in this task, we propose a GPT based model, **Duolando**, which autoregressively predicts the subsequent tokenized motion conditioned on the coordinated information of the music, the leader’s and the follower’s movements. To further enhance the GPT’s capabilities of generating stable results on unseen conditions (music and leader motions), we devise an off-policy reinforcement learning strategy that allows the model to explore viable trajectories from out-of-distribution samplings, guided by human-defined rewards. Based on the collected dataset and proposed method, we establish a benchmark with several carefully designed metrics.
 
@@ -24,6 +24,10 @@ Besides, thie project needs the SMPLX models, please download (after register) f
 
 
 ## DD100 Data 
+
+<p float="left">
+	<img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif1.gif" width="200" /> <img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif2.gif" width="200" /> <img width="200" src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif3.gif"/>
+	</p>
 
 In this work, we collect a duet dance dataset, named DD100. Please visit [here](https://drive.google.com/file/d/1sWc1MeRhRa9LoxarsJVFvt5vxsRk-F_M/view?usp=sharing) to download it and decompress to the ./data folder. The dataset will be look like
 
@@ -58,7 +62,6 @@ If you want to visualize these sequences, please run
 
 Before that, please change Line 12 of tools/vis/vis_smplx_w_blender_01.py to path/to/smplx/add-on/zip, change Line 4 of visualize_01.sh to path/to/blender.
 
-If you are not willing to do the preprocessing by yourself, you can directly download our preprocessed feature from [here] into ./data folder.
 
 ## Training
 
@@ -82,7 +85,7 @@ The training of Duolando comprises of 4 steps in the following sequence. If you 
 
 ## Evaluation
 
-To test with our pretrained models, please download the weights from [here]() (Google Drive) or [here] (OneDrive, TBD) into ./experiments folder.
+To test with our pretrained models, please download the weights from [here](https://drive.google.com/file/d/1DT9fzaz7M2ls7dqS1jwJdQc3Cy78_9Oy/view?usp=sharing) (Google Drive) or [here] (OneDrive, TBD) into ./experiments folder.
 
 ### 1. Generate dancing results
 
