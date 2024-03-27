@@ -25,7 +25,7 @@ Besides, thie project needs the SMPLX models, please download (after register) f
 
 ## DD100 Data 
 
-In this work, we collect a duet dance dataset, named DD100. Please visit [here] to download it and decompress to the ./data folder. The dataset will be look like
+In this work, we collect a duet dance dataset, named DD100. Please visit [here](https://drive.google.com/file/d/1sWc1MeRhRa9LoxarsJVFvt5vxsRk-F_M/view?usp=sharing) to download it and decompress to the ./data folder. The dataset will be look like
 
     data
       |-- motion
@@ -41,7 +41,7 @@ In this work, we collect a duet dance dataset, named DD100. Please visit [here] 
                   |-- [GENRE]_[CHOREOGRAPH]_[TAKE].mp3
                   ...
 
-Here, [GENRE] is the type of dance, like Ballet, Waltz, Tango, ... [CHOREOGRAPH] is the choreography index amd [TAKE] represent the take index. For 67 dance sequences we recorded the movement twice. Since the details of the movement may change, we keep them in two different takes. The xxx_00.npy and xxx_01.npy are the SMPLX sequences of the lady (follower dacer) and the the man (leader), respectively.
+Here, [GENRE] is the type of dance, like Ballet, Waltz, Tango, ... [CHOREOGRAPH] is the choreography index and [TAKE] represents the take index. For 67 dance sequences we recorded the movement twice. Since the details of the movement may change, we keep them in two different takes. The xxx_00.npy and xxx_01.npy are the SMPLX sequences of the lady (follower dacer) and the the man (leader), respectively.
 
 In our experiment, we need first transfer SMPLX format into ratation matrix and 3d positions of the joints, and transfer the .mp3 music to specific features. Run the following scripts to do so. Before that, please change the 'model_path' in Line 19 of _prepare_motion_data.py to path/to/downloaded/smplx/models.
     
@@ -49,7 +49,8 @@ In our experiment, we need first transfer SMPLX format into ratation matrix and 
     python _prepare_motion_data.py
     python _prepre_music_data.py
 
-Then you will see the split of 'train' and 'test' folder in subfolders under 'motion' and 'music', and see the extracted features. The 'pos3d' sequences are in shape of Tx55x3, where T is the frame number, 55 is the SMPLX joint number and 3 is (x,y,z) dimensions, while for 'rotmat', they are Tx55x9, where 9 is the 3x3 rotation matrix transformed from the axis angles of SMPLX.
+Then you will see the split of 'train' and 'test' folder in subfolders under 'motion' and 'music', and see the extracted features. The 'pos3d' sequences are in shape of Tx55x3, where T is the frame number, 55 is the SMPLX joint number and 3 is (x,y,z) dimensions, while for 'rotmat', they are Tx55x9, where 9 is the 3x3 rotation matrix transformed from the axis angles of SMPLX. If you are not willing to do the preprocessing by yourself, you can directly download our preprocessed feature from [here](https://drive.google.com/file/d/1MpoytmnSGbiVLSOL0QKvGz4dmW_8TrH6/view?usp=sharing) into ./data folder.
+
 
 If you want to visualize these sequences, please run
 
@@ -81,7 +82,7 @@ The training of Duolando comprises of 4 steps in the following sequence. If you 
 
 ## Evaluation
 
-To test with our pretrained models, please download the weights from [here] (Google Drive) or [here] (OneDrive0 into ./experiments folder.
+To test with our pretrained models, please download the weights from [here]() (Google Drive) or [here] (OneDrive, TBD) into ./experiments folder.
 
 ### 1. Generate dancing results
 
