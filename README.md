@@ -26,7 +26,7 @@ Besides, thie project needs the SMPLX models, please download (after register) f
 ## DD100 Data 
 
 <p float="center">
-	<img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif1.gif" width="300" /> <img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif2.gif" width="300" /> <img width="300" src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif3.gif"/>
+	<img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif1.gif" width="250" /> <img src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif2.gif" width="250" /> <img width="250" src="https://github.com/lisiyao21/Duolando/blob/main/figs/gif3.gif"/>
 	</p>
 
 In this work, we collect a duet dance dataset, named DD100. Please visit [here](https://drive.google.com/file/d/1sWc1MeRhRa9LoxarsJVFvt5vxsRk-F_M/view?usp=sharing) to download it and decompress to the ./data folder. The dataset will be look like
