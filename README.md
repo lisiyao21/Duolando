@@ -127,7 +127,7 @@ Before that, please change Line 80 and 81 to path/to/downloaded/smplx/models. Th
 
 The values should be exactly the same as reported in the paper. 
 
-c. Slipping rate
+d. Slipping rate
 
     python utils/metric_footskating_dur.py
 
@@ -139,11 +139,11 @@ Wish you enjoy it!
 
 ### Citation
 
-    @inproceedings{siyao2022bailando,
-	    title={Bailando: 3D dance generation via Actor-Critic GPT with Choreographic Memory,
-	    author={Siyao, Li and Yu, Weijiang and Gu, Tianpei and Lin, Chunze and Wang, Quan and Qian, Chen and Loy, Chen Change and Liu, Ziwei },
-	    booktitle={CVPR},
-	    year={2022}
+    @inproceedings{siyao2024duolando,
+	    title={Duolando: Follower GPT with Off-Policy Reinforcement Learning for Dance Accomapniment,
+	    author={Siyao, Li and Gu, Tianpei and Yang, Zhitao and Lin, Zhengyu and Liu, Ziwei and Ding, Henghui and Yang, Lei and Loy, Chen Change},
+	    booktitle={ICLR},
+	    year={2024}
     }
 
 ### License
