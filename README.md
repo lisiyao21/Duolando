@@ -1,7 +1,7 @@
 # Duolando
 Code for ICLR 2024 paper "Duolando: Follower GPT with Off-Policy Reinforcement Learning for Dance Accompaniment."
 
-[[Paper]] | [[Project Page](https://lisiyao21.github.io/projects/Duolando)] |  [[Video Demo](https://youtu.be/Y2zksX3cSCw?si=USqtMaRkIRXBIFGa)]
+[[Paper](https://arxiv.org/abs/2403.18811)] | [[Project Page](https://lisiyao21.github.io/projects/Duolando)] |  [[Video Demo](https://youtu.be/Y2zksX3cSCw?si=USqtMaRkIRXBIFGa)]
 
 ✨ Please do not hesitate to give a star! ✨
 
